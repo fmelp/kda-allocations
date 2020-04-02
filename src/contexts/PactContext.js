@@ -4,8 +4,8 @@ import { Icon } from 'semantic-ui-react'
 
 const Context = React.createContext();
 
-const hosts = ["us-e1", "us-e2", "us-w1", "us-w1", "fr1", "fr2", "jp1", "jp2"]
-const createAPIHost = (network, chainId) => `https://${network}.chainweb.com/chainweb/0.0/mainnet01/chain/${chainId}/pact`
+const hosts = ["us1", "us2"]
+const createAPIHost = (network, chainId) => `https://${network}.tn1.chainweb.com/chainweb/0.0/development/chain/${chainId}/pact`
 
 export class PactStore extends React.Component {
   constructor(props) {
