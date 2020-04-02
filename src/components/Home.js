@@ -7,9 +7,23 @@ import PactContext from "../contexts/PactContext";
 
 function Home() {
 
-  const pactContext = useContext(PactContext);
+  const chainOptions = [
+    { value: '0', text: '0' },
+    { value: '1', text: '1' },
+    { value: '2', text: '2' },
+    { value: '3', text: '3' },
+    { value: '4', text: '4' },
+    { value: '5', text: '5' },
+    { value: '6', text: '6' },
+    { value: '7', text: '7' },
+    { value: '8', text: '8' },
+    { value: '9', text: '9' },
+  ]
 
+  const pactContext = useContext(PactContext);
+  const result = pactContext.status
   const [acct, setAcct] = useState("");
+  const [chain, setChain] = useState("");
 
   return (
     <div className="App">
@@ -18,9 +32,11 @@ function Home() {
         <p>
           Investor Allocation Release Platform
         </p>
-        <Form>
-          <Form.Field  style={{marginTop: "0px", marginBottom: 10, textAlign: "left"}} >
-            <label style={{color: "#18A33C" }}>1. Enter Your Allocation Account Name
+        <Form success={result().success}
+              error={result().error}
+              warning={result().warning}>
+          <Form.Field  style={{marginTop: "0px", marginBottom: 10, width: "360px", marginLeft: "auto", marginRight: "auto"}} >
+            <label style={{color: "#18A33C", textAlign: "left" }}>1. Enter Your Allocation Account Name and Chain ID
               <Popup
                 trigger={
                   <Icon name='help circle' style={{"marginLeft": "2px"}}/>
@@ -32,15 +48,25 @@ function Home() {
               </Popup>
             </label>
             <Form.Input
+              style={{width: "360px"}}
               icon='user'
               iconPosition='left'
               placeholder='Account Name'
               value={acct}
               onChange={(e) => setAcct(e.target.value)}
             />
+            <Select
+              // iconPosition='left'
+              // icon='chain'
+              style={{width: "360px"}}
+              placeholder='Chain ID'
+              value={chain}
+              options={chainOptions}
+              onChange = {(e, v) => setChain(v.value)}
+            />
           </Form.Field>
-          <Form.Field  style={{marginTop: "0px", marginBottom: 10, textAlign: "left"}} >
-            <label style={{color: "#18A33C" }}>2. Have Chainweaver wallet app open
+          <Form.Field  style={{marginTop: "0px", marginBottom: 10, width: "360px", marginLeft: "auto", marginRight: "auto"}} >
+            <label style={{color: "#18A33C", textAlign: "left" }}>2. Have Chainweaver wallet app open
               <Popup
                 trigger={
                   <Icon name='help circle' style={{"marginLeft": "2px"}}/>
@@ -52,8 +78,8 @@ function Home() {
               </Popup>
             </label>
           </Form.Field>
-          <Form.Field  style={{marginTop: "0px", marginBottom: 10, textAlign: "left"}} >
-            <label style={{color: "#18A33C" }}>3. Press 'Release Allocation'
+          <Form.Field  style={{marginTop: "0px", marginBottom: 10, width: "360px", marginLeft: "auto", marginRight: "auto"}} >
+            <label style={{color: "#18A33C", textAlign: "left", marginBottom: 10 }}>3. Press 'Release Allocation'
               <Popup
                 trigger={
                   <Icon name='help circle' style={{"marginLeft": "2px"}}/>
@@ -64,20 +90,31 @@ function Home() {
               <Popup.Content>It will popup Chainweaver and ask you to sign for your allocation with the key you provided to CoinList</Popup.Content>
               </Popup>
             </label>
+            <label style={{color: "#18A33C", textAlign: "left",  marginBottom: 10 }}>4. Go to Accounts tab and add account "allocation-gas"
+              <Popup
+                trigger={
+                  <Icon name='help circle' style={{"marginLeft": "2px"}}/>
+                }
+                position='top center'
+              >
+                <Popup.Header>What does this button do? </Popup.Header>
+                <Popup.Content>It will add gas station in your chainweaver which will pay gas for this release. </Popup.Content>
+              </Popup>
+            </label>
             <Button
               disabled={acct === ""}
               style={{
               backgroundColor: "#18A33C",
               color: "white",
-              width: 340,
+              width: 360,
               }}
-              onClick={() => pactContext.relAll(acct)}
+              onClick={() => pactContext.relAll(acct, chain)}
             >
               Release Allocation
             </Button>
           </Form.Field>
-          <Form.Field  style={{marginTop: "0px", marginBottom: 10, textAlign: "left"}} >
-            <label style={{color: "#18A33C" }}>4. Sign Transaction
+          <Form.Field  style={{marginTop: "0px", marginBottom: 10, width: "360px", marginLeft: "auto", marginRight: "auto"}} >
+            <label style={{color: "#18A33C", textAlign: "left" }}>5. Sign Transaction as "Unrestricted Signing Keys"
               <Popup
                 trigger={
                   <Icon name='help circle' style={{"marginLeft": "2px"}}/>
@@ -89,8 +126,8 @@ function Home() {
               </Popup>
             </label>
           </Form.Field>
-          <Form.Field  style={{marginTop: "0px", marginBottom: 10, textAlign: "left"}} >
-            <label style={{color: "#18A33C" }}>5. Wait for funds to reach the account
+          <Form.Field  style={{marginTop: "0px", marginBottom: 10, width: "360px", marginLeft: "auto", marginRight: "auto"}} >
+            <label style={{color: "#18A33C", textAlign: "left"}}>6. Wait for funds to reach the account
               <Popup
                 trigger={
                   <Icon name='help circle' style={{"marginLeft": "2px"}}/>
@@ -101,6 +138,17 @@ function Home() {
               <Popup.Content>The block must be mined in order for the funds to transfer. This will take 30 seconds to 2 minutes</Popup.Content>
               </Popup>
             </label>
+          </Form.Field>
+          <Form.Field>
+            <Message
+              success={result().success}
+              warning={result().warning}
+              error={result().error}
+              hidden={result().hidden}
+            >
+              <Message.Header>{result().header}</Message.Header>
+              <div>{result().content}</div>
+            </Message>
           </Form.Field>
         </Form>
       </header>
