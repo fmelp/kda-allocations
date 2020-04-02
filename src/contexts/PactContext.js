@@ -88,7 +88,7 @@ export class PactStore extends React.Component {
   relAll = async (acct, chainId) => {
     try {
       const signCmd = {
-          pactCode: `(coin.get-balance ${JSON.stringify(acct)})`,
+          pactCode: `(coin.release-allocation ${JSON.stringify(acct)})`,
           caps: [
           ],
           sender: "allocation-gas",
