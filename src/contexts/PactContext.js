@@ -5,7 +5,7 @@ import { Icon } from 'semantic-ui-react'
 const Context = React.createContext();
 
 const hosts = ["us1", "us2"]
-const createAPIHost = (network, chainId) => `https://${network}.tn1.chainweb.com/chainweb/0.0/development/chain/${chainId}/pact`
+const createAPIHost = (network) => `https://${network}.tn1.chainweb.com/chainweb/0.0/development/chain/0/pact`
 
 export class PactStore extends React.Component {
   constructor(props) {
@@ -85,7 +85,7 @@ export class PactStore extends React.Component {
     return requestContent[this.state.requestState];
   }
 
-  relAll = async (acct, chainId) => {
+  relAll = async (acct) => {
     try {
       const signCmd = {
           pactCode: `(coin.release-allocation ${JSON.stringify(acct)})`,
@@ -94,7 +94,7 @@ export class PactStore extends React.Component {
           sender: "allocation-gas",
           gasLimit: 430,
           gasPrice: 0.000000000001,
-          chainId: chainId,
+          chainId: "0",
           ttl: 600,
           envData: {}
         }
@@ -103,7 +103,7 @@ export class PactStore extends React.Component {
         Pact.wallet.sign(signCmd).then(cmd => {
           //Wallet Signed && request Sent
           this.setState({requestState: 2});
-          return fetch(`${createAPIHost(hosts[0], chainId)}/api/v1/send`, {
+          return fetch(`${createAPIHost(hosts[0])}/api/v1/send`, {
             headers: {
               "Content-Type": "application/json"
             },
@@ -127,7 +127,7 @@ export class PactStore extends React.Component {
         }).then(reqKey => {
           //Listening for result
           this.setState({requestState: 4})
-          return Pact.fetch.listen({"listen": reqKey }, createAPIHost(hosts[0], chainId))
+          return Pact.fetch.listen({"listen": reqKey }, createAPIHost(hosts[0]))
         }).then(res => {
           //Result came back
           console.log(res)
