@@ -90,17 +90,6 @@ function Home() {
               <Popup.Content>It will popup Chainweaver and ask you to sign for your allocation with the key you provided to CoinList</Popup.Content>
               </Popup>
             </label>
-            <label style={{color: "#18A33C", textAlign: "left",  marginBottom: 10 }}>4. Go to Accounts tab and add account "allocation-gas"
-              <Popup
-                trigger={
-                  <Icon name='help circle' style={{"marginLeft": "2px"}}/>
-                }
-                position='top center'
-              >
-                <Popup.Header>What does this button do? </Popup.Header>
-                <Popup.Content>It will add gas station in your chainweaver which will pay gas for this release. </Popup.Content>
-              </Popup>
-            </label>
             <Button
               disabled={acct === ""}
               style={{
@@ -114,7 +103,7 @@ function Home() {
             </Button>
           </Form.Field>
           <Form.Field  style={{marginTop: "0px", marginBottom: 10, width: "360px", marginLeft: "auto", marginRight: "auto"}} >
-            <label style={{color: "#18A33C", textAlign: "left" }}>5. Sign Transaction as "Unrestricted Signing Keys"
+            <label style={{color: "#18A33C", textAlign: "left" }}>4. Sign Transaction as "Unrestricted Signing Keys"
               <Popup
                 trigger={
                   <Icon name='help circle' style={{"marginLeft": "2px"}}/>
@@ -127,7 +116,7 @@ function Home() {
             </label>
           </Form.Field>
           <Form.Field  style={{marginTop: "0px", marginBottom: 10, width: "360px", marginLeft: "auto", marginRight: "auto"}} >
-            <label style={{color: "#18A33C", textAlign: "left"}}>6. Wait for funds to reach the account
+            <label style={{color: "#18A33C", textAlign: "left"}}>5. Wait for funds to reach the account
               <Popup
                 trigger={
                   <Icon name='help circle' style={{"marginLeft": "2px"}}/>
