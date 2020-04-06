@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import '../App.css';
 import { Button, Grid, Input, Icon, Form, List,
    Modal, Header, Message, Popup, Select, Radio,
-   Tab, TextArea, Loader } from 'semantic-ui-react';
+   Tab, TextArea, Loader, Step } from 'semantic-ui-react';
+
 import PactContext from "../contexts/PactContext";
 
 function Home() {
@@ -34,16 +35,38 @@ function Home() {
         <Form success={result().success}
               error={result().error}
               warning={result().warning}>
-          <Form.Field  style={{marginTop: "0px", marginBottom: 10, width: "360px", marginLeft: "auto", marginRight: "auto"}} >
-            <label style={{color: "#18A33C", textAlign: "left" }}>1. Enter Your Allocation Account Name
+
+        <Form.Field>
+          <Step.Group vertical style={{color: "#18A33C", marginLeft: "-750px",width: "360px" }}>
+            <Step>
+              <Step.Content>
+                <Step.Description>On the <b>Configuration</b> tab: No action needed. Press “Next"</Step.Description>
+              </Step.Content>
+            </Step>
+
+            <Step>
+              <Step.Content>
+                <Step.Description>On the <b>Sign</b> tab:<br/> In the Grant Capabilities section, leave the Account dropdown field blank. In the Unrestricted Signing Keys section, check the box beside your allocation account’s public key. Press “Next”</Step.Description>
+              </Step.Content>
+            </Step>
+
+            <Step>
+              <Step.Content>
+                <Step.Description>On the <b>Preview</b> tab:<br/> Scroll down to the Raw Response section. If you see "Allocation successfully released to main ledger" then press “Submit.” If you see an error message then reach out to <a>monica@kadena.io</a> for support.</Step.Description>
+              </Step.Content>
+            </Step>
+          </Step.Group>
+          </Form.Field>
+          <Form.Field  style={{marginTop: "0px", marginBottom: 10, width: "360px", marginLeft: "auto", marginRight: "auto", marginTop: -300}} >
+            <label style={{color: "#18A33C", textAlign: "left" }}>1. Enter the Account Name for the month’s allocation
               <Popup
                 trigger={
                   <Icon name='help circle' style={{"marginLeft": "2px"}}/>
                 }
                 position='top center'
               >
-              <Popup.Header>What is an Allocation Account Name? </Popup.Header>
-              <Popup.Content>Kadena provides an account for each month of vesting named similarly to "SA &lt;1&gt;_2" —each month has a unique identifier. Please make sure there’s a space before the "&lt;"</Popup.Content>
+                <Popup.Header>What is an Allocation Account Name? </Popup.Header>
+                <Popup.Content>{`Investors have a unique account name for each month that allocations vest. The account name format is similar to “SA <1>_2” and please note there is a space before the “<” character.`}</Popup.Content>
               </Popup>
             </label>
             <Form.Input
@@ -55,58 +78,38 @@ function Home() {
               onChange={(e) => setAcct(e.target.value)}
             />
           </Form.Field>
-          <Form.Field  style={{marginTop: "0px", marginBottom: 10, width: "360px", marginLeft: "auto", marginRight: "auto"}} >
-            <label style={{color: "#18A33C", textAlign: "left" }}>2. Have Chainweaver wallet app open
+
+          <Form.Field  style={{marginTop: "0px", width: "360px", marginLeft: "auto", marginRight: "auto"}} >
+            <label style={{color: "#18A33C", textAlign: "left" }}>2. Open and unlock your Chainweaver wallet (must be on version 1.X, upgrade <a href="https://www.kadena.io/chainweaver"><b>here</b></a>
               <Popup
                 trigger={
                   <Icon name='help circle' style={{"marginLeft": "2px"}}/>
                 }
                 position='top center'
               >
-              <Popup.Header>What is Chainweaver? </Popup.Header>
-              <Popup.Content>You should already have our Chainweaver wallet downloaded as you used it to generate a public key to provide to CoinList</Popup.Content>
+                <Popup.Header>What is Chainweaver? </Popup.Header>
+                <Popup.Content>You should already have our Chainweaver wallet downloaded as you used it to generate a public key to provide to CoinList</Popup.Content>
               </Popup>
             </label>
           </Form.Field>
-          <Form.Field  style={{marginTop: "0px", marginBottom: 10, width: "360px", marginLeft: "auto", marginRight: "auto"}} >
-            <label style={{color: "#18A33C", textAlign: "left", marginBottom: 10 }}>3. Press 'Release Allocation'
-              <Popup
-                trigger={
-                  <Icon name='help circle' style={{"marginLeft": "2px"}}/>
-                }
-                position='top center'
+          <Form.Field  style={{ width: "360px", marginLeft: "auto", marginRight: "auto"}} >
+            <label style={{color: "#18A33C", textAlign: "left", marginBottom: 10 }}>3. Select the “Release Allocation” button below </label>
+          </Form.Field>
+            <Form.Field style={{marginTop: 10, marginBottom: 10, width: "360px", marginLeft: "auto", marginRight: "auto"}}  >
+              <Button
+                disabled={acct === ""}
+                style={{
+                backgroundColor: "#18A33C",
+                color: "white",
+                width: 360,
+                }}
+                onClick={() => pactContext.relAll(acct)}
               >
-              <Popup.Header>What does this button do? </Popup.Header>
-              <Popup.Content>It will popup Chainweaver and ask you to sign for your allocation with the key you provided to CoinList</Popup.Content>
-              </Popup>
-            </label>
-            <Button
-              disabled={acct === ""}
-              style={{
-              backgroundColor: "#18A33C",
-              color: "white",
-              width: 360,
-              }}
-              onClick={() => pactContext.relAll(acct)}
-            >
-              Release Allocation
-            </Button>
-          </Form.Field>
+                Release Allocation
+              </Button>
+            </Form.Field>
           <Form.Field  style={{marginTop: "0px", marginBottom: 10, width: "360px", marginLeft: "auto", marginRight: "auto"}} >
-            <label style={{color: "#18A33C", textAlign: "left" }}>4. Sign Transaction as "Unrestricted Signing Keys"
-              <Popup
-                trigger={
-                  <Icon name='help circle' style={{"marginLeft": "2px"}}/>
-                }
-                position='top center'
-              >
-              <Popup.Header>How do I sign for this transaction?</Popup.Header>
-              <Popup.Content>In the Chainweaver popup, press 'Next' then ONLY check the box with the public key you provided to CoinList under the 'unrestrcited signing' section (leave the GAS dropdown blank). Then press 'Next' and 'Submit'</Popup.Content>
-              </Popup>
-            </label>
-          </Form.Field>
-          <Form.Field  style={{marginTop: "0px", marginBottom: 10, width: "360px", marginLeft: "auto", marginRight: "auto"}} >
-            <label style={{color: "#18A33C", textAlign: "left"}}>5. Wait for funds to reach the account
+            <label style={{color: "#18A33C", textAlign: "left"}}>4. Refresh your Account balance in Chainweaver to verify completion
               <Popup
                 trigger={
                   <Icon name='help circle' style={{"marginLeft": "2px"}}/>
@@ -114,7 +117,7 @@ function Home() {
                 position='top center'
               >
               <Popup.Header>Why do I need to wait?</Popup.Header>
-              <Popup.Content>The block must be mined in order for the funds to transfer. This will take 30 seconds to 2 minutes</Popup.Content>
+              <Popup.Content>Upon signing and submitting the allocation release transaction, wait up to 2 minutes for the transaction to be mined in a block. Then press the “Refresh” button in Chainweaver to see your updated account balance.</Popup.Content>
               </Popup>
             </label>
           </Form.Field>
