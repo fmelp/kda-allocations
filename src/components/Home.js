@@ -90,7 +90,7 @@ function Home() {
 
               <Step  style={{width:320}}>
                 <Step.Content>
-                  <Step.Description>On the <b>Preview</b> tab:<br/> Scroll down to the Raw Response section. If you see "Allocation successfully released to main ledger" then press “Submit.” If you see an error message then reach out to <a>monica@kadena.io</a> for support.</Step.Description>
+                  <Step.Description>On the <b>Preview</b> tab:<br/> Scroll down to the Raw Response section. If you see "Allocation successfully released to main ledger" then press “Submit.” If you see an error message then reach out to <a href = "mailto: monica@kadena.io">monica@kadena.io</a> for support.</Step.Description>
                 </Step.Content>
               </Step>
             </Step.Group>
