@@ -36,28 +36,7 @@ function Home() {
               error={result().error}
               warning={result().warning}>
 
-        <Form.Field>
-          <Step.Group vertical style={{color: "#18A33C", marginLeft: "-750px",width: "360px" }}>
-            <Step>
-              <Step.Content>
-                <Step.Description>On the <b>Configuration</b> tab: No action needed. Press “Next"</Step.Description>
-              </Step.Content>
-            </Step>
-
-            <Step>
-              <Step.Content>
-                <Step.Description>On the <b>Sign</b> tab:<br/> In the Grant Capabilities section, leave the Account dropdown field blank. In the Unrestricted Signing Keys section, check the box beside your allocation account’s public key. Press “Next”</Step.Description>
-              </Step.Content>
-            </Step>
-
-            <Step>
-              <Step.Content>
-                <Step.Description>On the <b>Preview</b> tab:<br/> Scroll down to the Raw Response section. If you see "Allocation successfully released to main ledger" then press “Submit.” If you see an error message then reach out to <a>monica@kadena.io</a> for support.</Step.Description>
-              </Step.Content>
-            </Step>
-          </Step.Group>
-          </Form.Field>
-          <Form.Field  style={{marginTop: "0px", marginBottom: 10, width: "360px", marginLeft: "auto", marginRight: "auto", marginTop: -300}} >
+          <Form.Field  style={{marginTop: "0px", marginBottom: 10, width: "360px", marginLeft: "auto", marginRight: "auto"}} >
             <label style={{color: "#18A33C", textAlign: "left" }}>1. Enter the Account Name for the month’s allocation
               <Popup
                 trigger={
@@ -95,6 +74,28 @@ function Home() {
           <Form.Field  style={{ width: "360px", marginLeft: "auto", marginRight: "auto"}} >
             <label style={{color: "#18A33C", textAlign: "left", marginBottom: 10 }}>3. Select the “Release Allocation” button below </label>
           </Form.Field>
+          <Form.Field>
+            <Step.Group>
+              <Step style={{width:320}}>
+                <Step.Content>
+                  <Step.Description>On the <b>Configuration</b> tab: <br/>No action needed. Press “Next"</Step.Description>
+                </Step.Content>
+              </Step>
+
+              <Step  style={{width:320}}>
+                <Step.Content>
+                  <Step.Description>On the <b>Sign</b> tab: <br/>In the Grant Capabilities section, leave the Account dropdown field blank. In the Unrestricted Signing Keys section, check the box beside your allocation account’s public key. Press “Next”</Step.Description>
+                </Step.Content>
+              </Step>
+
+              <Step  style={{width:320}}>
+                <Step.Content>
+                  <Step.Description>On the <b>Preview</b> tab:<br/> Scroll down to the Raw Response section. If you see "Allocation successfully released to main ledger" then press “Submit.” If you see an error message then reach out to <a>monica@kadena.io</a> for support.</Step.Description>
+                </Step.Content>
+              </Step>
+            </Step.Group>
+            </Form.Field>
+
             <Form.Field style={{marginTop: 10, marginBottom: 10, width: "360px", marginLeft: "auto", marginRight: "auto"}}  >
               <Button
                 disabled={acct === ""}
