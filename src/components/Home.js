@@ -30,9 +30,12 @@ function Home() {
     <div className="App">
       <header className="App-header">
         <img src={require("../kadena.png")} style={{height:100, marginBottom: 10}}/>
-        <p>
-          Investor Allocation Release Platform
-        </p>
+        <h1>
+          Investor Allocation Release Tool
+        </h1>
+        <h5>A simplified method for investors to release their monthly vesting token allocations
+          <br/>*In order to use this tool, the keypair associated with your allocation accounts must have been generated within Chainweaver.
+        </h5>
         <Form success={result().success}
               error={result().error}
               warning={result().warning}>
@@ -70,21 +73,28 @@ function Home() {
 
           <Form.Field  style={{marginTop: "0px", width: "360px", marginLeft: "auto", marginRight: "auto"}} >
             <label style={{color: "#18A33C", textAlign: "left" }}>2. Open and unlock your Chainweaver wallet (must be on version 1.X, upgrade <a href="https://www.kadena.io/chainweaver"><b>here</b></a>
-              <Popup
-                trigger={
-                  <Icon name='help circle' style={{"marginLeft": "2px"}}/>
-                }
-                position='top center'
-              >
-                <Popup.Header>What is Chainweaver? </Popup.Header>
-                <Popup.Content>You should already have our Chainweaver wallet downloaded as you used it to generate a public key to provide to CoinList</Popup.Content>
-              </Popup>
             </label>
           </Form.Field>
           <Form.Field  style={{ width: "360px", marginLeft: "auto", marginRight: "auto"}} >
             <label style={{color: "#18A33C", textAlign: "left", marginBottom: 10 }}>3. Select the “Release Allocation” button below </label>
           </Form.Field>
+          <Form.Field style={{marginTop: 10, marginBottom: 10, width: "360px", marginLeft: "auto", marginRight: "auto"}}  >
+            <Button
+              disabled={acct === ""}
+              style={{
+              backgroundColor: "#18A33C",
+              color: "white",
+              width: 360,
+              }}
+              onClick={() => pactContext.relAll(acct, chain)}
+            >
+              Release Allocation
+            </Button>
+          </Form.Field>
           <Form.Field>
+          <p style={{marginBottom:-10}}>
+          Once pressed, Chainweaver should pop up with a transaction Signing Request:
+          </p>
             <Step.Group>
               <Step style={{width:320}}>
                 <Step.Content>
@@ -100,24 +110,10 @@ function Home() {
 
               <Step  style={{width:320}}>
                 <Step.Content>
-                  <Step.Description>On the <b>Preview</b> tab:<br/> Scroll down to the Raw Response section. If you see "Allocation successfully released to main ledger" then press “Submit.” If you see an error message then reach out to <a href = "mailto: monica@kadena.io">monica@kadena.io</a> for support.</Step.Description>
+                  <Step.Description>On the <b>Preview</b> tab:<br/> Scroll down to the Raw Response section. If you see "Allocation successfully released to main ledger" then press “Submit.” If you see an error message then reach out to <a href = "mailto: gtm-ops@kadena.io">gtm-ops@kadena.io</a> for support.</Step.Description>
                 </Step.Content>
               </Step>
             </Step.Group>
-            </Form.Field>
-
-            <Form.Field style={{marginTop: 10, marginBottom: 10, width: "360px", marginLeft: "auto", marginRight: "auto"}}  >
-              <Button
-                disabled={acct === ""}
-                style={{
-                backgroundColor: "#18A33C",
-                color: "white",
-                width: 360,
-                }}
-                onClick={() => pactContext.relAll(acct, chain)}
-              >
-                Release Allocation
-              </Button>
             </Form.Field>
           <Form.Field  style={{marginTop: "0px", marginBottom: 10, width: "360px", marginLeft: "auto", marginRight: "auto"}} >
             <label style={{color: "#18A33C", textAlign: "left"}}>4. Refresh your Account balance in Chainweaver to verify completion
