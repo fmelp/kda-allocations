@@ -128,7 +128,7 @@ function Home() {
               </Popup>
             </label>
           </Form.Field>
-          <Form.Field>
+          <Form.Field style={{width: 500, margin: "auto"}}>
             <Message
               success={result().success}
               warning={result().warning}

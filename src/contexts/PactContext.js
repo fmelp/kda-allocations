@@ -92,7 +92,7 @@ export class PactStore extends React.Component {
           caps: [
           ],
           sender: "allocation-gas",
-          gasLimit: 430,
+          gasLimit: 440,
           gasPrice: 0.000000000001,
           chainId: chainId,
           ttl: 600,
