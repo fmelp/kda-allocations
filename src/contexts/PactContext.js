@@ -91,9 +91,9 @@ export class PactStore extends React.Component {
           pactCode: `(coin.release-allocation ${JSON.stringify(acct)})`,
           caps: [
           ],
-          sender: "allocation-gas1",
+          sender: "allocation-gas3",
           gasLimit: 450,
-          gasPrice: 0.000000000001,
+          gasPrice: 0.0000001,
           chainId: chainId,
           ttl: 600,
           envData: {}
