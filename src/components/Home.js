@@ -43,7 +43,7 @@ function Home() {
               warning={result().warning}>
 
           <Form.Field  style={{marginTop: "0px", marginBottom: 10, width: "360px", marginLeft: "auto", marginRight: "auto"}} >
-            <label style={{color: "#18A33C", textAlign: "left" }}>1. Enter the Account Name for the month’s allocation
+            <label style={{color: "#18A33C", textAlign: "left" }}>1. Enter the Account Name and Chain ID for the month’s allocation
               <Popup
                 trigger={
                   <Icon name='help circle' style={{"marginLeft": "2px"}}/>
