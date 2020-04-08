@@ -33,8 +33,10 @@ function Home() {
         <h1>
           Investor Allocation Release Tool
         </h1>
-        <h5>A simplified method for investors to release their monthly vesting token allocations
-          <br/>*In order to use this tool, the keypair associated with your allocation accounts must have been generated within Chainweaver.
+        <h5>This is a simplified method for investors to release their monthly vesting token allocations.
+        </h5>
+        <h5 style={{marginTop: -5, fontWeight: "normal", fontStyle: "italic"}}>
+        *In order to use this tool, the keypair associated with your allocation accounts must have been generated within Chainweaver.
         </h5>
         <Form success={result().success}
               error={result().error}
@@ -72,7 +74,7 @@ function Home() {
           </Form.Field>
 
           <Form.Field  style={{marginTop: "0px", width: "360px", marginLeft: "auto", marginRight: "auto"}} >
-            <label style={{color: "#18A33C", textAlign: "left" }}>2. Open and unlock your Chainweaver wallet (must be on version 1.X, upgrade <a href="https://www.kadena.io/chainweaver"><b>here</b></a>
+            <label style={{color: "#18A33C", textAlign: "left" }}>2. Open and unlock your Chainweaver wallet (must be on version 1.3 or greater, upgrade <a href="https://www.kadena.io/chainweaver"><b>here</b></a>
             </label>
           </Form.Field>
           <Form.Field  style={{ width: "360px", marginLeft: "auto", marginRight: "auto"}} >

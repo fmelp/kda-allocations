@@ -75,7 +75,7 @@ export class PactStore extends React.Component {
     const requestContent = {
       0: {header: "", content: "", hidden: true},
       1: {header: "Sign your Wallet", content: <p>
-      1. In the Chainweaver popup, press 'Next'. <br/>2. ONLY check the box with the public key you provided to CoinList<br/> under the 'unrestrcited signing' section. (Leave GAS dropdown BLANK).<br/>3. Then press 'Next' and 'Submit'"</p>, hidden: false},
+      1. In the Chainweaver popup, press 'Next'. <br/>2. ONLY check the box with the public key you provided to CoinList<br/> under the 'unrestrcited signing' section. (Leave GAS dropdown BLANK).<br/>3. Then press 'Next' and 'Submit'"</p>, hidden: true},
       2: {header: "Sign Completed", content: this.state.reqKey, hidden: false},
       3: {header: "Sending TX" , content: this.state.reqKey, hidden: false},
       4: {header: "Request Key", content: this.loading(this.state.reqKey), hidden: false},
