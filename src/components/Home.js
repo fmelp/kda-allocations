@@ -74,7 +74,7 @@ function Home() {
           </Form.Field>
 
           <Form.Field  style={{marginTop: "0px", width: "360px", marginLeft: "auto", marginRight: "auto"}} >
-            <label style={{color: "#18A33C", textAlign: "left" }}>2. Open and unlock your Chainweaver wallet (must be on version 1.3 or greater, upgrade <a href="https://www.kadena.io/chainweaver"><b>here</b></a>
+            <label style={{color: "#18A33C", textAlign: "left" }}>2. Open and unlock your Chainweaver wallet (must be on version 1.3 or greater, upgrade <a href="https://www.kadena.io/chainweaver"><b>here</b></a>)
             </label>
           </Form.Field>
           <Form.Field  style={{ width: "360px", marginLeft: "auto", marginRight: "auto"}} >
