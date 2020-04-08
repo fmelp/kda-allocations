@@ -100,7 +100,7 @@ function Home() {
             <Step.Group>
               <Step style={{width:320}}>
                 <Step.Content>
-                  <Step.Description>On the <b>Configuration</b> tab: <br/>In the Settings section, change the Gas Price to 0.00001. Do not change any other transaction settings. Press "Next"</Step.Description>
+                  <Step.Description>On the <b>Configuration</b> tab: <br/>In the Settings section, change the Gas Price to 0.0000001. Do not change any other transaction settings. Press "Next"</Step.Description>
                 </Step.Content>
               </Step>
 
