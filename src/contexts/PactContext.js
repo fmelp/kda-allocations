@@ -92,7 +92,8 @@ export class PactStore extends React.Component {
 
         const localCmd = {
             pactCode: `(describe-keyset ${JSON.stringify(acct)})`,
-            meta: Pact.lang.mkMeta("Bob", chainId, 0.0001, 400, Math.round((new Date).getTime()/1000)-10, 28800)
+            meta: Pact.lang.mkMeta("Bob", chainId, 0.0001, 400, Math.round((new Date).getTime()/1000)-10, 28800),
+            keyPairs: []
           }
 
         Pact.fetch.local(localCmd, createAPIHost(hosts[0], chainId)).then(res => {
