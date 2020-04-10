@@ -4,7 +4,7 @@ import { Icon } from 'semantic-ui-react'
 
 const Context = React.createContext();
 
-const hosts = ["us-e1", "us-e2", "us-w1", "us-w1", "fr1", "fr2", "jp1", "jp2"]
+const hosts = ["us-e1", "us-e2", "us-w1", "us-w2", "jp1", "jp2", "fr1", "fr2"]
 const createAPIHost = (network, chainId) => `https://${network}.chainweb.com/chainweb/0.0/mainnet01/chain/${chainId}/pact`
 
 export class PactStore extends React.Component {
@@ -75,7 +75,7 @@ export class PactStore extends React.Component {
     const requestContent = {
       0: {header: "", content: "", hidden: true},
       1: {header: "Sign your Wallet", content: <p>
-      1. In the Chainweaver popup, press 'Next'. <br/>2. ONLY check the box with the public key you provided to CoinList<br/> under the 'unrestrcited signing' section. (Leave GAS dropdown BLANK).<br/>3. Then press 'Next' and 'Submit'"</p>, hidden: false},
+        1. In the Chainweaver popup, press 'Next'. <br/>2. ONLY check the box with the public key you provided to CoinList<br/> under the 'unrestrcited signing' section. (Leave GAS dropdown BLANK).<br/>3. Then press 'Next' and 'Submit'"</p>, hidden: true},
       2: {header: "Sign Completed", content: this.state.reqKey, hidden: false},
       3: {header: "Sending TX" , content: this.state.reqKey, hidden: false},
       4: {header: "Request Key", content: this.loading(this.state.reqKey), hidden: false},
@@ -85,32 +85,48 @@ export class PactStore extends React.Component {
     return requestContent[this.state.requestState];
   }
 
-  relAll = async (acct, chainId) => {
+  relAll = async (acct) => {
     try {
-      const signCmd = {
-          pactCode: `(coin.release-allocation ${JSON.stringify(acct)})`,
-          caps: [
-          ],
-          sender: "allocation-gas",
-          gasLimit: 430,
-          gasPrice: 0.000000000001,
-          chainId: chainId,
-          ttl: 600,
-          envData: {}
-        }
         //Wallet Open
         this.setState({requestState: 1});
-        Pact.wallet.sign(signCmd).then(cmd => {
-          //Wallet Signed && request Sent
-          this.setState({requestState: 2});
-          return fetch(`${createAPIHost(hosts[0], chainId)}/api/v1/send`, {
-            headers: {
-              "Content-Type": "application/json"
-            },
-            method: "POST",
-            body: JSON.stringify({"cmds": [cmd]})
-          });
-        }).then(async res => {
+
+        const localCmd = {
+            pactCode: `(describe-keyset ${JSON.stringify(acct)})`,
+            meta: Pact.lang.mkMeta("Bob", "0", 0.0001, 400, Math.round((new Date).getTime()/1000)-10, 28800),
+            keyPairs: []
+          }
+
+        Pact.fetch.local(localCmd, createAPIHost(hosts[0], "0")).then(res => {
+          if (res.result && res.result.status === "success"){
+            return res.result.data.keys[0]
+          } else if (res.result && res.result.status === "failure"){
+             throw "The account cannot be found. Please check your account one more time."
+          } else throw "Something went wrong. Please try again."
+        }).then(key => {
+          const signCmd = {
+              pactCode: `(coin.release-allocation ${JSON.stringify(acct)})`,
+              caps: [
+              ],
+              sender: key,
+              gasLimit: 450,
+              gasPrice: 0.0000001,
+              chainId: "0",
+              ttl: 600,
+              envData: {}
+            }
+          return Pact.wallet.sign(signCmd).then(cmd => {
+            //Wallet Signed && request Sent
+            this.setState({requestState: 2});
+            return fetch(`${createAPIHost(hosts[0], "0")}/api/v1/send`, {
+              headers: {
+                "Content-Type": "application/json"
+              },
+              method: "POST",
+              body: JSON.stringify({"cmds": [cmd]})
+            });
+          })
+        })
+        .then(async res => {
           let reqKey
           if (res.ok){
             reqKey = await res.json();
@@ -127,7 +143,7 @@ export class PactStore extends React.Component {
         }).then(reqKey => {
           //Listening for result
           this.setState({requestState: 4})
-          return Pact.fetch.listen({"listen": reqKey }, createAPIHost(hosts[0], chainId))
+          return Pact.fetch.listen({"listen": reqKey }, createAPIHost(hosts[0], "0"))
         }).then(res => {
           //Result came back
           console.log(res)
