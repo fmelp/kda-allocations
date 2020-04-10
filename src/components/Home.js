@@ -110,10 +110,10 @@ function Home() {
               <Step  style={{width:320}}>
                 <Step.Title>Sign tab</Step.Title>
                 <Step.Content>
-                  <Step.Description><br/><br/>
+                  <Step.Description><br/><br/><br/>
                     Grant Capabilities section: <b>Leave the Account dropdown field blank, otherwise the transaction will fail.</b><br/><br/>
                     Unrestricted Signing Keys section: Check the box beside your allocation account’s public key.<br/><br/>
-                    Press “Next”<br/><br/><br/><br/><br/>
+                    Press “Next”<br/><br/><br/><br/>
                   </Step.Description>
                 </Step.Content>
               </Step>
