@@ -4,8 +4,8 @@ import { Icon } from 'semantic-ui-react'
 
 const Context = React.createContext();
 
-const hosts = ["us1", "us2"]
-const createAPIHost = (network, chainId) => `https://${network}.tn1.chainweb.com/chainweb/0.0/development/chain/${chainId}/pact`
+const hosts = ["us-e1", "us-e2", "us-w1", "us-w2", "jp1", "jp2", "fr1", "fr2"]
+const createAPIHost = (network, chainId) => `https://${network}.chainweb.com/chainweb/0.0/mainnet01/chain/${chainId}/pact`
 
 export class PactStore extends React.Component {
   constructor(props) {
@@ -85,18 +85,18 @@ export class PactStore extends React.Component {
     return requestContent[this.state.requestState];
   }
 
-  relAll = async (acct, chainId) => {
+  relAll = async (acct) => {
     try {
         //Wallet Open
         this.setState({requestState: 1});
 
         const localCmd = {
             pactCode: `(describe-keyset ${JSON.stringify(acct)})`,
-            meta: Pact.lang.mkMeta("Bob", chainId, 0.0001, 400, Math.round((new Date).getTime()/1000)-10, 28800),
+            meta: Pact.lang.mkMeta("Bob", "0", 0.0001, 400, Math.round((new Date).getTime()/1000)-10, 28800),
             keyPairs: []
           }
 
-        Pact.fetch.local(localCmd, createAPIHost(hosts[0], chainId)).then(res => {
+        Pact.fetch.local(localCmd, createAPIHost(hosts[0], "0")).then(res => {
           if (res.result && res.result.status === "success"){
             return res.result.data.keys[0]
           } else if (res.result && res.result.status === "failure"){
@@ -110,14 +110,14 @@ export class PactStore extends React.Component {
               sender: key,
               gasLimit: 450,
               gasPrice: 0.0000001,
-              chainId: chainId,
+              chainId: "0",
               ttl: 600,
               envData: {}
             }
           return Pact.wallet.sign(signCmd).then(cmd => {
             //Wallet Signed && request Sent
             this.setState({requestState: 2});
-            return fetch(`${createAPIHost(hosts[0], chainId)}/api/v1/send`, {
+            return fetch(`${createAPIHost(hosts[0], "0")}/api/v1/send`, {
               headers: {
                 "Content-Type": "application/json"
               },
@@ -143,7 +143,7 @@ export class PactStore extends React.Component {
         }).then(reqKey => {
           //Listening for result
           this.setState({requestState: 4})
-          return Pact.fetch.listen({"listen": reqKey }, createAPIHost(hosts[0], chainId))
+          return Pact.fetch.listen({"listen": reqKey }, createAPIHost(hosts[0], "0"))
         }).then(res => {
           //Result came back
           console.log(res)

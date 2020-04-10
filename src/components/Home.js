@@ -24,7 +24,6 @@ function Home() {
   const pactContext = useContext(PactContext);
   const result = pactContext.status
   const [acct, setAcct] = useState("");
-  const [chain, setChain] = useState("");
 
   return (
     <div className="App">
@@ -43,7 +42,7 @@ function Home() {
               warning={result().warning}>
 
           <Form.Field  style={{marginTop: "0px", marginBottom: 10, width: "360px", marginLeft: "auto", marginRight: "auto"}} >
-            <label style={{color: "#18A33C", textAlign: "left" }}>1. Enter the Account Name and Chain ID for the month’s allocation
+            <label style={{color: "#18A33C", textAlign: "left" }}>1. Enter the Account Name for the month’s allocation
               <Popup
                 trigger={
                   <Icon name='help circle' style={{"marginLeft": "2px"}}/>
@@ -62,15 +61,6 @@ function Home() {
               value={acct}
               onChange={(e) => setAcct(e.target.value)}
             />
-            <Select
-             // iconPosition='left'
-             // icon='chain'
-             style={{width: "360px"}}
-             placeholder='Chain ID'
-             value={chain}
-             options={chainOptions}
-             onChange = {(e, v) => setChain(v.value)}
-           />
           </Form.Field>
 
           <Form.Field  style={{marginTop: "0px", width: "360px", marginLeft: "auto", marginRight: "auto"}} >
@@ -88,7 +78,7 @@ function Home() {
               color: "white",
               width: 360,
               }}
-              onClick={() => pactContext.relAll(acct, chain)}
+              onClick={() => pactContext.relAll(acct)}
             >
               Release Allocation
             </Button>
