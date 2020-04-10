@@ -99,26 +99,40 @@ function Home() {
           </p>
             <Step.Group>
               <Step style={{width:320}}>
+                <Step.Title>Configuration tab</Step.Title>
                 <Step.Content>
-                  <Step.Description>On the <b>Configuration</b> tab: <br/>In the Settings section, change the Gas Price to 0.0000001. Do not change any other transaction settings. Press "Next"</Step.Description>
+                  <Step.Description><br/><br/><br/><br/>
+                    Settings section: Change the Gas Price to 0.00000001 (that is 7 zeros) and the Gas Limit to 450 units.
+                    <br/><br/> Press "Next"<br/><br/><br/><br/><br/><br/></Step.Description>
                 </Step.Content>
               </Step>
 
               <Step  style={{width:320}}>
+                <Step.Title>Sign tab</Step.Title>
                 <Step.Content>
-                  <Step.Description>On the <b>Sign</b> tab: <br/>In the Grant Capabilities section, leave the Account dropdown field blank. In the Unrestricted Signing Keys section, check the box beside your allocation account’s public key. Press “Next”</Step.Description>
+                  <Step.Description><br/><br/>
+                    Grant Capabilities section: <b>Leave the Account dropdown field blank, otherwise the transaction will fail.</b><br/><br/>
+                    Unrestricted Signing Keys section: Check the box beside your allocation account’s public key.<br/><br/>
+                    Press “Next”<br/><br/><br/><br/><br/>
+                  </Step.Description>
                 </Step.Content>
               </Step>
 
               <Step  style={{width:320}}>
+                <Step.Title>Preview tab</Step.Title>
                 <Step.Content>
-                  <Step.Description>On the <b>Preview</b> tab:<br/> Scroll down to the Raw Response section. If you see "Allocation successfully released to main ledger" then press “Submit.” If you see an error message then reach out to <a href = "mailto: gtm-ops@kadena.io">gtm-ops@kadena.io</a> for support.</Step.Description>
+                  <Step.Description><br/>
+                    Notice section: You should see a response that says “A ‘Gas Payer’ has not been selected for this transaction. Are you sure this is correct?” <b>Yes, that is correct.</b><br/><br/>
+                    Transaction Sender section: Confirm that you see the same public key that you selected in the previous Sign tab.<br/><br/>
+                    Raw Response section: Confirm that you see "Allocation successfully released to main ledger" (If you see an error message then reach out to <a href = "mailto: gtm-ops@kadena.io">gtm-ops@kadena.io</a> for support.)<br/><br/>
+                    Press “Submit”
+                    </Step.Description>
                 </Step.Content>
               </Step>
             </Step.Group>
             </Form.Field>
           <Form.Field  style={{marginTop: "0px", marginBottom: 10, width: "360px", marginLeft: "auto", marginRight: "auto"}} >
-            <label style={{color: "#18A33C", textAlign: "left"}}>4. Refresh your Account balance in Chainweaver to verify completion
+            <label style={{color: "#18A33C", textAlign: "left"}}>4. Wait ~1 minute for the transaction to be mined, then check your allocation account’s balance.
               <Popup
                 trigger={
                   <Icon name='help circle' style={{"marginLeft": "2px"}}/>
@@ -126,7 +140,7 @@ function Home() {
                 position='top center'
               >
               <Popup.Header>Why do I need to wait?</Popup.Header>
-              <Popup.Content>Upon signing and submitting the allocation release transaction, wait up to 2 minutes for the transaction to be mined in a block. Then press the “Refresh” button in Chainweaver to see your updated account balance.</Popup.Content>
+              <Popup.Content>Check your account’s balance in Chainweaver by pressing the “Refresh” button. You may also check your account balance at <a href="https://balance.chainweb.com">balance.chainweb.com</a></Popup.Content>
               </Popup>
             </label>
           </Form.Field>
