@@ -90,18 +90,29 @@ export class PactStore extends React.Component {
         //Wallet Open
         this.setState({requestState: 1});
 
-        const localCmd = {
-            pactCode: `(describe-keyset ${JSON.stringify(acct)})`,
-            meta: Pact.lang.mkMeta("Bob", "0", 0.0001, 400, Math.round((new Date).getTime()/1000)-10, 28800),
-            keyPairs: []
-          }
 
-        Pact.fetch.local(localCmd, createAPIHost(hosts[0], "0")).then(res => {
+        const detailCmd = {
+          pactCode: `(coin.details ${JSON.stringify(acct)})`,
+          keyPairs: Pact.crypto.genKeyPair(),
+          meta: Pact.lang.mkMeta("Bob", "0", 0.0001, 400, Math.round((new Date).getTime()/1000)-10, 28800),
+        }
+
+        Pact.fetch.local(detailCmd, createAPIHost(hosts[0], "0")).then(res => {
           if (res.result && res.result.status === "success"){
-            return res.result.data.keys[0]
+            return res.result.data.guard.keysetref
           } else if (res.result && res.result.status === "failure"){
              throw "The account cannot be found. Please check your account one more time."
           } else throw "Something went wrong. Please try again."
+        }).then(ks => {
+          return Pact.fetch.local( {
+                      pactCode: `(describe-keyset ${JSON.stringify(ks)})`,
+                      meta: Pact.lang.mkMeta("Bob", "0", 0.0001, 400, Math.round((new Date).getTime()/1000)-10, 28800),
+                      keyPairs: []
+                    }, createAPIHost(hosts[0], "0"))
+        }).then(res => {
+            if (res.result && res.result.status === "success"){
+              return res.result.data.keys[0]
+            } else throw "Something went wrong. Please try again."
         }).then(key => {
           const signCmd = {
               pactCode: `(coin.release-allocation ${JSON.stringify(acct)})`,
